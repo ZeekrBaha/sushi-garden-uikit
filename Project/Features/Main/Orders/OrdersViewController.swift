@@ -28,6 +28,12 @@ private extension Order.Status {
 final class OrderSummaryCell: UITableViewCell {
     static let reuseIdentifier = "OrderSummaryCell"
 
+    private static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMM"
+        return formatter
+    }()
+
     private let dateLabel = UILabel()
     private let itemCountLabel = UILabel()
     private let totalLabel = UILabel()
@@ -41,9 +47,7 @@ final class OrderSummaryCell: UITableViewCell {
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     func configure(with order: Order) {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d MMM"
-        dateLabel.text = formatter.string(from: order.createdAt)
+        dateLabel.text = Self.dateFormatter.string(from: order.createdAt)
 
         let itemCount = order.items.reduce(0) { $0 + $1.quantity }
         itemCountLabel.text = "\(itemCount) \(itemCount == 1 ? "товар" : "товара")"
@@ -51,6 +55,15 @@ final class OrderSummaryCell: UITableViewCell {
         totalLabel.text = "₽\(order.total)"
         statusBadge.text = " \(order.status.displayName) "
         statusBadge.backgroundColor = order.status.badgeColor
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        dateLabel.text = nil
+        itemCountLabel.text = nil
+        totalLabel.text = nil
+        statusBadge.text = nil
+        statusBadge.backgroundColor = nil
     }
 
     private func setup() {
