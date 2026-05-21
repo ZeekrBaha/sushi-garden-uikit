@@ -5,7 +5,7 @@ final class QuantityStepper: UIView {
     var onCountChanged: ((Int) -> Void)?
 
     private let decrementButton = UIButton(type: .system)
-    private let countLabel = UILabel()
+    let countLabel = UILabel()
     private let incrementButton = UIButton(type: .system)
 
     override init(frame: CGRect) {

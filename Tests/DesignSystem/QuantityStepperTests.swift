@@ -47,6 +47,7 @@ final class QuantityStepperTests: XCTestCase {
         let sut = QuantityStepper()
         sut.setCount(3)
         XCTAssertEqual(sut.count, 3)
+        XCTAssertEqual(sut.countLabel.text, "3")
     }
 
     func test_setCount_belowOne_doesNothing() {
