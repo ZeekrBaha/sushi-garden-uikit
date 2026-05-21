@@ -31,13 +31,10 @@ final class InMemoryCartService: CartServicing {
     }
 
     func setQuantity(_ quantity: Int, for productId: String) {
+        guard quantity >= 0 else { return }  // ignore invalid negative quantities
         var current = subject.value
         guard let index = current.firstIndex(where: { $0.product.id == productId }) else { return }
-        if quantity <= 0 {
-            current.remove(at: index)
-        } else {
-            current[index].quantity = quantity
-        }
+        if quantity == 0 { current.remove(at: index) } else { current[index].quantity = quantity }
         subject.send(current)
     }
 
