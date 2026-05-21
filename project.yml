@@ -32,6 +32,7 @@ targets:
       - target: SushiGarden
     settings:
       base:
+        INFOPLIST_FILE: Tests/Info.plist
         TARGETED_DEVICE_FAMILY: "1"
   SushiGardenUITests:
     type: bundle.ui-testing
@@ -42,5 +43,6 @@ targets:
       - target: SushiGarden
     settings:
       base:
+        INFOPLIST_FILE: UITests/Info.plist
         BUNDLE_LOADER: ""
         TARGETED_DEVICE_FAMILY: "1"
