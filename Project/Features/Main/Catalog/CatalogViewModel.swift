@@ -21,6 +21,7 @@ final class CatalogViewModel {
     var categories: [Category] { catalog.categories() }
 
     func selectCategory(_ id: String) {
+        guard id != selectedCategoryId else { return }
         selectedCategoryId = id
         displayedProducts = catalog.products(in: id)
     }
