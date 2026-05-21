@@ -72,6 +72,7 @@ final class CheckoutViewController: UIViewController {
             infoStack.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: Spacing.m),
             infoStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Spacing.m),
             infoStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Spacing.m),
+            infoStack.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -Spacing.m),
         ])
     }
 
