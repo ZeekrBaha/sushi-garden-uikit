@@ -22,8 +22,19 @@ final class MainTabCoordinator: Coordinator {
         catalogNav.tabBarItem = UITabBarItem(
             title: "Каталог", image: UIImage(systemName: "fork.knife"), tag: 0)
 
-        let ordersVC = makePlaceholder(title: "Заказы", systemImage: "list.bullet", tag: 1)
-        let promotionsVC = makePlaceholder(title: "Акции", systemImage: "tag", tag: 2)
+        let ordersNav = UINavigationController()
+        let ordersCoordinator = OrdersCoordinator(navigationController: ordersNav, container: container)
+        addChild(ordersCoordinator)
+        ordersCoordinator.start()
+        ordersNav.tabBarItem = UITabBarItem(
+            title: "Заказы", image: UIImage(systemName: "list.bullet"), tag: 1)
+
+        let promotionsNav = UINavigationController()
+        let promotionsCoordinator = PromotionsCoordinator(navigationController: promotionsNav)
+        addChild(promotionsCoordinator)
+        promotionsCoordinator.start()
+        promotionsNav.tabBarItem = UITabBarItem(
+            title: "Акции", image: UIImage(systemName: "tag"), tag: 2)
 
         let cartNav = UINavigationController()
         cartNav.navigationBar.isHidden = true
@@ -38,9 +49,17 @@ final class MainTabCoordinator: Coordinator {
         cartNav.tabBarItem = UITabBarItem(
             title: "Корзина", image: UIImage(systemName: "bag"), tag: 3)
 
-        let profileVC = makePlaceholder(title: "Профиль", systemImage: "person", tag: 4)
+        let profileNav = UINavigationController()
+        let profileCoordinator = ProfileCoordinator(
+            navigationController: profileNav,
+            container: container,
+            onLogout: { [weak self] in self?.handleLogout() })
+        addChild(profileCoordinator)
+        profileCoordinator.start()
+        profileNav.tabBarItem = UITabBarItem(
+            title: "Профиль", image: UIImage(systemName: "person"), tag: 4)
 
-        tabBarController.viewControllers = [catalogNav, ordersVC, promotionsVC, cartNav, profileVC]
+        tabBarController.viewControllers = [catalogNav, ordersNav, promotionsNav, cartNav, profileNav]
         tabBarController.tabBar.barTintColor = AppColor.surface
         tabBarController.tabBar.tintColor = AppColor.textPrimary
         tabBarController.tabBar.unselectedItemTintColor = AppColor.inactive
@@ -48,11 +67,8 @@ final class MainTabCoordinator: Coordinator {
         bindCartBadge()
     }
 
-    private func makePlaceholder(title: String, systemImage: String, tag: Int) -> UIViewController {
-        let vc = UIViewController()
-        vc.view.backgroundColor = AppColor.background
-        vc.tabBarItem = UITabBarItem(title: title, image: UIImage(systemName: systemImage), tag: tag)
-        return vc
+    private func handleLogout() {
+        // auth.logout() was already called by ProfileViewModel; AppCoordinator handles the transition
     }
 
     private func bindCartBadge() {

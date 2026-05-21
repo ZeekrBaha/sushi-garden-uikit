@@ -59,4 +59,25 @@ final class MainTabCoordinatorTests: XCTestCase {
         let nav = sut.tabBarController.viewControllers?[3] as? UINavigationController
         XCTAssertTrue(nav?.topViewController is CartViewController)
     }
+
+    func test_start_ordersTabContainsOrdersViewController() {
+        let sut = makeSUT()
+        sut.start()
+        let nav = sut.tabBarController.viewControllers?[1] as? UINavigationController
+        XCTAssertTrue(nav?.topViewController is OrdersViewController)
+    }
+
+    func test_start_promotionsTabContainsPromotionsViewController() {
+        let sut = makeSUT()
+        sut.start()
+        let nav = sut.tabBarController.viewControllers?[2] as? UINavigationController
+        XCTAssertTrue(nav?.topViewController is PromotionsViewController)
+    }
+
+    func test_start_profileTabContainsProfileViewController() {
+        let sut = makeSUT()
+        sut.start()
+        let nav = sut.tabBarController.viewControllers?[4] as? UINavigationController
+        XCTAssertTrue(nav?.topViewController is ProfileViewController)
+    }
 }
