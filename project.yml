@@ -11,6 +11,7 @@ settings:
     CURRENT_PROJECT_VERSION: "1"
     DEVELOPMENT_LANGUAGE: ru
     TARGETED_DEVICE_FAMILY: "1"
+    CODE_SIGN_IDENTITY: "Apple Development"
 targets:
   SushiGarden:
     type: application
@@ -29,6 +30,9 @@ targets:
       - Tests
     dependencies:
       - target: SushiGarden
+    settings:
+      base:
+        TARGETED_DEVICE_FAMILY: "1"
   SushiGardenUITests:
     type: bundle.ui-testing
     platform: iOS
@@ -36,3 +40,7 @@ targets:
       - UITests
     dependencies:
       - target: SushiGarden
+    settings:
+      base:
+        BUNDLE_LOADER: ""
+        TARGETED_DEVICE_FAMILY: "1"
