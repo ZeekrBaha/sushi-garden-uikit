@@ -28,6 +28,12 @@ final class QuantityStepper: UIView {
         onCountChanged?(count)
     }
 
+    func setCount(_ newCount: Int) {
+        guard newCount >= 1 else { return }
+        count = newCount
+        countLabel.text = "\(count)"
+    }
+
     private func setup() {
         backgroundColor = AppColor.elevated
         layer.cornerRadius = Spacing.cardRadius

@@ -42,4 +42,24 @@ final class QuantityStepperTests: XCTestCase {
         sut.decrement()
         XCTAssertEqual(received, 1)
     }
+
+    func test_setCount_updatesCount() {
+        let sut = QuantityStepper()
+        sut.setCount(3)
+        XCTAssertEqual(sut.count, 3)
+    }
+
+    func test_setCount_belowOne_doesNothing() {
+        let sut = QuantityStepper()
+        sut.setCount(0)
+        XCTAssertEqual(sut.count, 1)
+    }
+
+    func test_setCount_doesNotFireOnCountChanged() {
+        let sut = QuantityStepper()
+        var called = false
+        sut.onCountChanged = { _ in called = true }
+        sut.setCount(3)
+        XCTAssertFalse(called)
+    }
 }
