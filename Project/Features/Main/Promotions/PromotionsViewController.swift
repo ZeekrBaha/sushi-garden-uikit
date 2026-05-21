@@ -69,7 +69,7 @@ final class PromotionBannerCell: UITableViewCell {
 // MARK: - PromotionsViewController
 
 final class PromotionsViewController: UIViewController {
-    private let promotions: [Promotion] = [
+    private static let promotions: [Promotion] = [
         Promotion(id: "1", title: "Бесплатная доставка",
                   description: "При заказе от 1500 ₽", imageName: "bicycle"),
         Promotion(id: "2", title: "Ролл в подарок",
@@ -110,7 +110,7 @@ final class PromotionsViewController: UIViewController {
 
 extension PromotionsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        promotions.count
+        Self.promotions.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -118,7 +118,7 @@ extension PromotionsViewController: UITableViewDataSource {
             withIdentifier: PromotionBannerCell.reuseIdentifier,
             for: indexPath) as? PromotionBannerCell
         else { return UITableViewCell() }
-        cell.configure(with: promotions[indexPath.row])
+        cell.configure(with: Self.promotions[indexPath.row])
         return cell
     }
 }
