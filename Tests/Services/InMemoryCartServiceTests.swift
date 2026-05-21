@@ -17,10 +17,6 @@ final class InMemoryCartServiceTests: XCTestCase {
                 price: price, imageName: id, description: "")
     }
 
-    private func makeProduct(_ id: String, price: Int) -> Product {
-        product(id, price)
-    }
-
     func test_add_incrementsQuantityForSameProduct() {
         cart.add(product("idaho", 810))
         cart.add(product("idaho", 810))
@@ -52,15 +48,14 @@ final class InMemoryCartServiceTests: XCTestCase {
     }
 
     func test_remove_removesItemFromCart() {
-        let product = makeProduct("p1", price: 500)
-        cart.add(product)
+        cart.add(product("p1", 500))
         cart.remove(productId: "p1")
         XCTAssertTrue(cart.items.isEmpty)
     }
 
     func test_clear_emptiesCart() {
-        cart.add(makeProduct("p1", price: 500))
-        cart.add(makeProduct("p2", price: 300))
+        cart.add(product("p1", 500))
+        cart.add(product("p2", 300))
         cart.clear()
         XCTAssertTrue(cart.items.isEmpty)
         XCTAssertEqual(cart.totalCount, 0)
@@ -68,17 +63,15 @@ final class InMemoryCartServiceTests: XCTestCase {
     }
 
     func test_setQuantity_updatesQuantity() {
-        let product = makeProduct("p1", price: 500)
-        cart.add(product)
+        cart.add(product("p1", 500))
         cart.setQuantity(5, for: "p1")
         XCTAssertEqual(cart.items.first?.quantity, 5)
         XCTAssertEqual(cart.totalPrice, 2500)
     }
 
     func test_setQuantity_negative_isIgnored() {
-        let product = makeProduct("p1", price: 500)
-        cart.add(product)
+        cart.add(product("p1", 500))
         cart.setQuantity(-1, for: "p1")
-        XCTAssertEqual(cart.items.count, 1)  // item still present
+        XCTAssertEqual(cart.items.count, 1)
     }
 }
