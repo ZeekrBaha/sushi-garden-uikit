@@ -7,6 +7,12 @@ final class CheckoutViewModelTests: XCTestCase {
 
     // MARK: - Helpers
 
+    private func drainMainQueue() {
+        let exp = expectation(description: "main queue drained")
+        DispatchQueue.main.async { exp.fulfill() }
+        wait(for: [exp], timeout: 1.0)
+    }
+
     private final class MockGeocoder: Geocoding {
         var stubbedPlacemarks: [CLPlacemark]?
         var stubbedError: Error?
@@ -56,6 +62,7 @@ final class CheckoutViewModelTests: XCTestCase {
     func test_reverseGeocode_onSuccess_setsLastDeliveryAddress() {
         let sut = makeSUT(geocoder: successGeocoder())
         sut.reverseGeocode(location: testLocation)
+        drainMainQueue()
         XCTAssertNotNil(sut.lastDeliveryAddress)
     }
 
@@ -64,10 +71,12 @@ final class CheckoutViewModelTests: XCTestCase {
         mock.stubbedError = NSError(domain: "test", code: 1)
         let sut = makeSUT(geocoder: mock)
         sut.reverseGeocode(location: testLocation) // first call fails
+        drainMainQueue()
 
         let successMock = successGeocoder()
         let sut2 = makeSUT(geocoder: successMock)
         sut2.reverseGeocode(location: testLocation)
+        drainMainQueue()
         XCTAssertFalse(sut2.geocodingFailed)
     }
 
@@ -76,6 +85,7 @@ final class CheckoutViewModelTests: XCTestCase {
         mock.stubbedError = NSError(domain: "test", code: 1)
         let sut = makeSUT(geocoder: mock)
         sut.reverseGeocode(location: testLocation)
+        drainMainQueue()
         XCTAssertTrue(sut.geocodingFailed)
         XCTAssertNil(sut.lastDeliveryAddress)
     }
@@ -85,6 +95,7 @@ final class CheckoutViewModelTests: XCTestCase {
         mock.stubbedPlacemarks = []
         let sut = makeSUT(geocoder: mock)
         sut.reverseGeocode(location: testLocation)
+        drainMainQueue()
         XCTAssertTrue(sut.geocodingFailed)
     }
 
@@ -98,6 +109,7 @@ final class CheckoutViewModelTests: XCTestCase {
     func test_canPlaceOrder_trueAfterSuccessfulGeocode() {
         let sut = makeSUT(geocoder: successGeocoder())
         sut.reverseGeocode(location: testLocation)
+        drainMainQueue()
         XCTAssertTrue(sut.canPlaceOrder)
     }
 
@@ -105,6 +117,7 @@ final class CheckoutViewModelTests: XCTestCase {
         let orders = InMemoryOrdersService()
         let sut = makeSUT(orders: orders, geocoder: successGeocoder())
         sut.reverseGeocode(location: testLocation)
+        drainMainQueue()
         sut.placeOrder()
         XCTAssertEqual(orders.orders.count, 1)
     }
@@ -113,6 +126,7 @@ final class CheckoutViewModelTests: XCTestCase {
         let orders = InMemoryOrdersService()
         let sut = makeSUT(orders: orders, geocoder: successGeocoder())
         sut.reverseGeocode(location: testLocation)
+        drainMainQueue()
         sut.placeOrder()
         XCTAssertEqual(orders.orders.first?.items.first?.product.id, "p1")
     }
@@ -122,6 +136,7 @@ final class CheckoutViewModelTests: XCTestCase {
         cart.add(makeProduct())
         let sut = makeSUT(cart: cart, geocoder: successGeocoder())
         sut.reverseGeocode(location: testLocation)
+        drainMainQueue()
         sut.placeOrder()
         XCTAssertTrue(cart.items.isEmpty)
     }
@@ -131,6 +146,7 @@ final class CheckoutViewModelTests: XCTestCase {
         var called = false
         sut.onOrderPlaced = { called = true }
         sut.reverseGeocode(location: testLocation)
+        drainMainQueue()
         sut.placeOrder()
         XCTAssertTrue(called)
     }

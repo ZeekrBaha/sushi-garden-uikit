@@ -41,7 +41,7 @@ final class CheckoutViewModel {
         geocoder.reverseGeocodeLocation(location) { [weak self] placemarks, error in
             guard let self else { return }
             guard error == nil, let placemark = placemarks?.first else {
-                self.geocodingFailed = true
+                DispatchQueue.main.async { self.geocodingFailed = true }
                 return
             }
             let delivery = DeliveryAddress(
@@ -49,9 +49,11 @@ final class CheckoutViewModel {
                 street: placemark.thoroughfare ?? "",
                 building: placemark.subThoroughfare ?? ""
             )
-            self.lastDeliveryAddress = delivery
-            self.address = delivery.formatted
-            self.geocodingFailed = false
+            DispatchQueue.main.async {
+                self.lastDeliveryAddress = delivery
+                self.address = delivery.formatted
+                self.geocodingFailed = false
+            }
         }
     }
 
