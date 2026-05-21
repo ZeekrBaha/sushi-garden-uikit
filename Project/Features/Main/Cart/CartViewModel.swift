@@ -14,6 +14,8 @@ final class CartViewModel {
     init(cart: CartServicing) {
         self.cart = cart
         cart.itemsPublisher
+            .dropFirst()
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] items in self?.items = items }
             .store(in: &cancellables)
     }

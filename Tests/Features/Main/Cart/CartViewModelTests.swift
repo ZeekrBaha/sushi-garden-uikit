@@ -10,6 +10,12 @@ final class CartViewModelTests: XCTestCase {
         super.tearDown()
     }
 
+    private func drainMainQueue() {
+        let exp = expectation(description: "main queue drained")
+        DispatchQueue.main.async { exp.fulfill() }
+        wait(for: [exp], timeout: 1.0)
+    }
+
     private func makeProduct(_ id: String = "p1", price: Int = 500) -> Product {
         Product(id: id, name: "Test", categoryId: "rolls",
                 weightGrams: 200, price: price, imageName: "test", description: "")
@@ -24,6 +30,7 @@ final class CartViewModelTests: XCTestCase {
         let cart = InMemoryCartService()
         let sut = CartViewModel(cart: cart)
         cart.add(makeProduct())
+        drainMainQueue()
         XCTAssertEqual(sut.items.count, 1)
     }
 
@@ -32,6 +39,7 @@ final class CartViewModelTests: XCTestCase {
         let sut = CartViewModel(cart: cart)
         cart.add(makeProduct("p1", price: 500))
         cart.add(makeProduct("p2", price: 300))
+        drainMainQueue()
         XCTAssertEqual(sut.totalPrice, 800)
     }
 
@@ -44,6 +52,7 @@ final class CartViewModelTests: XCTestCase {
         let cart = InMemoryCartService()
         let sut = CartViewModel(cart: cart)
         cart.add(makeProduct())
+        drainMainQueue()
         XCTAssertFalse(sut.isEmpty)
     }
 
@@ -77,6 +86,7 @@ final class CartViewModelTests: XCTestCase {
         var count = 0
         sut.$items.dropFirst().sink { _ in count += 1 }.store(in: &cancellables)
         cart.add(makeProduct())
+        drainMainQueue()
         XCTAssertEqual(count, 1)
     }
 }

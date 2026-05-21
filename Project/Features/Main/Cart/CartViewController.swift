@@ -101,9 +101,6 @@ extension CartViewController: UITableViewDataSource {
         cell.onQuantityChanged = { [weak self] qty in
             self?.viewModel.setQuantity(qty, for: item.product.id)
         }
-        cell.onRemove = { [weak self] in
-            self?.viewModel.remove(productId: item.product.id)
-        }
         return cell
     }
 }

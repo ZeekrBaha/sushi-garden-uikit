@@ -59,7 +59,7 @@ final class CheckoutViewModel {
 
     func placeOrder() {
         guard let delivery = lastDeliveryAddress else { return }
-        _ = orders.placeOrder(items: items, address: delivery)
+        orders.placeOrder(items: items, address: delivery)
         cart.clear()
         onOrderPlaced?()
     }
