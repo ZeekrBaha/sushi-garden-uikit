@@ -24,8 +24,16 @@ final class AppCoordinator: Coordinator {
     }
 
     private func setRoot(isAuthenticated: Bool) {
-        window.rootViewController = isAuthenticated
-            ? MainPlaceholderViewController()
-            : AuthPlaceholderViewController()
+        if isAuthenticated {
+            childCoordinators.removeAll()
+            window.rootViewController = MainPlaceholderViewController()
+        } else {
+            let nav = UINavigationController()
+            nav.navigationBar.isHidden = true
+            let authCoordinator = AuthCoordinator(navigationController: nav, container: container)
+            addChild(authCoordinator)
+            authCoordinator.start()
+            window.rootViewController = nav
+        }
     }
 }
