@@ -1,6 +1,6 @@
 import Foundation
 
-struct Promotion: Identifiable {
+struct Promotion: Identifiable, Equatable, Hashable {
     let id: String
     let title: String
     let description: String
