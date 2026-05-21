@@ -39,7 +39,7 @@ final class QuantityStepper: UIView {
         decrementButton.translatesAutoresizingMaskIntoConstraints = false
         decrementButton.addTarget(self, action: #selector(decrementTapped), for: .touchUpInside)
 
-        countLabel.text = "1"
+        countLabel.text = "\(count)"
         countLabel.textColor = AppColor.textPrimary
         countLabel.font = AppFont.weight
         countLabel.textAlignment = .center
