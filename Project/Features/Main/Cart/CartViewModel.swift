@@ -13,6 +13,7 @@ final class CartViewModel {
 
     init(cart: CartServicing) {
         self.cart = cart
+        self.items = cart.items
         cart.itemsPublisher
             .dropFirst()
             .receive(on: DispatchQueue.main)
