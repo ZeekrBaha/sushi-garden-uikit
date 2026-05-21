@@ -7,7 +7,7 @@ final class ProductCell: UICollectionViewCell {
     let weightLabel = UILabel()
     let priceLabel = UILabel()
     private let imageView = UIImageView()
-    private let addButton = UIButton(type: .system)
+    private let addButton = UIButton(type: .custom)
 
     var onAddTapped: (() -> Void)?
 
@@ -23,6 +23,12 @@ final class ProductCell: UICollectionViewCell {
         weightLabel.text = "\(product.weightGrams) г"
         priceLabel.text = "\(product.price) ₽"
         imageView.image = UIImage(named: product.imageName) ?? UIImage(systemName: "photo")
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        onAddTapped = nil
+        imageView.image = nil
     }
 
     func simulateAddTap() {
