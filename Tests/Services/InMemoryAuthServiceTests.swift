@@ -35,10 +35,20 @@ final class InMemoryAuthServiceTests: XCTestCase {
         XCTAssertTrue(auth.isAuthenticated)
     }
 
+    func test_register_withDuplicateEmail_returnsEmailTaken() {
+        let auth = InMemoryAuthService()
+        _ = auth.register(name: "A", phone: "1", email: "test@sushi.ru", password: "x")
+        let result = auth.register(name: "B", phone: "2", email: "test@sushi.ru", password: "y")
+        XCTAssertEqual(result, .failure(.emailTaken))
+    }
+
     func test_logout_publishesUnauthenticated() {
         let auth = InMemoryAuthService()
+        var states: [Bool] = []
+        auth.isAuthenticatedPublisher.sink { states.append($0) }.store(in: &cancellables)
         _ = auth.login(email: "test@sushi.ru", password: "secret1")
         auth.logout()
         XCTAssertFalse(auth.isAuthenticated)
+        XCTAssertEqual(states, [false, true, false])
     }
 }
