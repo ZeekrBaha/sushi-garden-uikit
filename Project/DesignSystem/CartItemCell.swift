@@ -34,6 +34,7 @@ final class CartItemCell: UITableViewCell {
         onQuantityChanged = nil
         onRemove = nil
         productImageView.image = nil
+        stepper.setCount(1)
     }
 
     private func setup() {

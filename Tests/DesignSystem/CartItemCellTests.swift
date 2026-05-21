@@ -29,4 +29,12 @@ final class CartItemCellTests: XCTestCase {
         sut.simulateIncrementTap()
         XCTAssertEqual(received, 2)
     }
+
+    func test_onRemove_canBeSet() {
+        let sut = CartItemCell()
+        var called = false
+        sut.onRemove = { called = true }
+        sut.onRemove?()
+        XCTAssertTrue(called)
+    }
 }
