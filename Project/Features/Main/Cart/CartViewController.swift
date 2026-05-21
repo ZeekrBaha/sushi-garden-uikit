@@ -90,8 +90,12 @@ extension CartViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: CartItemCell.reuseIdentifier, for: indexPath) as! CartItemCell
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: CartItemCell.reuseIdentifier, for: indexPath) as? CartItemCell
+        else { fatalError("Failed to dequeue CartItemCell") }
+        guard indexPath.row < viewModel.items.count else {
+            return UITableViewCell()
+        }
         let item = viewModel.items[indexPath.row]
         cell.configure(with: item)
         cell.onQuantityChanged = { [weak self] qty in
@@ -107,6 +111,7 @@ extension CartViewController: UITableViewDataSource {
 extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard indexPath.row < viewModel.items.count else { return nil }
         let item = viewModel.items[indexPath.row]
         let delete = UIContextualAction(style: .destructive, title: "Удалить") { [weak self] _, _, completion in
             self?.viewModel.remove(productId: item.product.id)
