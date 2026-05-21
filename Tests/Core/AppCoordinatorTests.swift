@@ -4,7 +4,8 @@ import XCTest
 final class AppCoordinatorTests: XCTestCase {
     func test_start_whenUnauthenticated_setsAuthPlaceholderRoot() {
         let window = UIWindow()
-        let container = AppContainer()      // seeded auth = logged out
+        let auth = InMemoryAuthService()    // starts unauthenticated (authSubject initial value = false)
+        let container = AppContainer(auth: auth)
         let sut = AppCoordinator(window: window, container: container)
 
         sut.start()
