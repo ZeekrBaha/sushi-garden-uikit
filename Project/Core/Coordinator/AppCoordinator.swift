@@ -26,7 +26,10 @@ final class AppCoordinator: Coordinator {
     private func setRoot(isAuthenticated: Bool) {
         if isAuthenticated {
             childCoordinators.removeAll()
-            window.rootViewController = MainPlaceholderViewController()
+            let mainTabCoordinator = MainTabCoordinator(container: container)
+            addChild(mainTabCoordinator)
+            mainTabCoordinator.start()
+            window.rootViewController = mainTabCoordinator.tabBarController
         } else {
             let nav = UINavigationController()
             nav.navigationBar.isHidden = true

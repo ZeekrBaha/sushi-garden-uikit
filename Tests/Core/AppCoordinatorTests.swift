@@ -21,13 +21,13 @@ final class AppCoordinatorTests: XCTestCase {
         XCTAssertTrue(nav?.topViewController is SplashViewController)
     }
 
-    func test_whenAuthenticationSucceeds_swapsToMainPlaceholderRoot() {
+    func test_whenAuthenticationSucceeds_swapsToTabBarController() {
         let window = UIWindow()
         let auth = InMemoryAuthService()
         let container = AppContainer(auth: auth)
         let sut = AppCoordinator(window: window, container: container)
         sut.start()
         _ = auth.login(email: "test@sushi.ru", password: "secret1")
-        XCTAssertTrue(window.rootViewController is MainPlaceholderViewController)
+        XCTAssertTrue(window.rootViewController is UITabBarController)
     }
 }
