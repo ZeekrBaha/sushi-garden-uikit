@@ -25,6 +25,7 @@ final class CartCoordinatorTests: XCTestCase {
         let cartVC = nav.topViewController as? CartViewController
         cartVC?.viewModel.checkout()
         XCTAssertTrue(nav.viewControllers.last is CheckoutViewController)
+        _ = sut
     }
 
     func test_onOrderPlaced_callsSwitchToOrders() {
