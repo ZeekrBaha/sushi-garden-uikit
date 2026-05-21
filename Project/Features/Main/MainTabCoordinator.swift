@@ -19,15 +19,28 @@ final class MainTabCoordinator: Coordinator {
         let catalogCoordinator = CatalogCoordinator(navigationController: catalogNav, container: container)
         addChild(catalogCoordinator)
         catalogCoordinator.start()
-        catalogNav.tabBarItem = UITabBarItem(title: "Каталог",
-                                             image: UIImage(systemName: "fork.knife"), tag: 0)
+        catalogNav.tabBarItem = UITabBarItem(
+            title: "Каталог", image: UIImage(systemName: "fork.knife"), tag: 0)
 
         let ordersVC = makePlaceholder(title: "Заказы", systemImage: "list.bullet", tag: 1)
         let promotionsVC = makePlaceholder(title: "Акции", systemImage: "tag", tag: 2)
-        let cartVC = makePlaceholder(title: "Корзина", systemImage: "bag", tag: 3)
+
+        let cartNav = UINavigationController()
+        cartNav.navigationBar.isHidden = true
+        let cartCoordinator = CartCoordinator(
+            navigationController: cartNav,
+            container: container,
+            onSwitchToOrders: { [weak self] in
+                self?.tabBarController.selectedIndex = 1
+            })
+        addChild(cartCoordinator)
+        cartCoordinator.start()
+        cartNav.tabBarItem = UITabBarItem(
+            title: "Корзина", image: UIImage(systemName: "bag"), tag: 3)
+
         let profileVC = makePlaceholder(title: "Профиль", systemImage: "person", tag: 4)
 
-        tabBarController.viewControllers = [catalogNav, ordersVC, promotionsVC, cartVC, profileVC]
+        tabBarController.viewControllers = [catalogNav, ordersVC, promotionsVC, cartNav, profileVC]
         tabBarController.tabBar.barTintColor = AppColor.surface
         tabBarController.tabBar.tintColor = AppColor.textPrimary
         tabBarController.tabBar.unselectedItemTintColor = AppColor.inactive

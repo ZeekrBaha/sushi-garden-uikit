@@ -46,4 +46,17 @@ final class MainTabCoordinatorTests: XCTestCase {
         cart.clear()
         XCTAssertNil(sut.tabBarController.viewControllers?[3].tabBarItem.badgeValue)
     }
+
+    func test_start_cartTabIsNavigationController() {
+        let sut = makeSUT()
+        sut.start()
+        XCTAssertTrue(sut.tabBarController.viewControllers?[3] is UINavigationController)
+    }
+
+    func test_start_cartTabContainsCartViewController() {
+        let sut = makeSUT()
+        sut.start()
+        let nav = sut.tabBarController.viewControllers?[3] as? UINavigationController
+        XCTAssertTrue(nav?.topViewController is CartViewController)
+    }
 }
