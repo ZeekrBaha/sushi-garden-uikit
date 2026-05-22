@@ -34,6 +34,12 @@ final class QuantityStepper: UIView {
         countLabel.text = "\(count)"
     }
 
+    func setIdentifierPrefix(_ prefix: String) {
+        decrementButton.accessibilityIdentifier = "\(prefix).decrement"
+        countLabel.accessibilityIdentifier = "\(prefix).count"
+        incrementButton.accessibilityIdentifier = "\(prefix).increment"
+    }
+
     private func setup() {
         backgroundColor = AppColor.elevated
         layer.cornerRadius = Spacing.cardRadius

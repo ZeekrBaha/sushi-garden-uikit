@@ -20,6 +20,10 @@ final class FormField: UIView {
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
+    func setFieldIdentifier(_ id: String) {
+        textField.accessibilityIdentifier = id
+    }
+
     private func setup(placeholder: String, isSecure: Bool) {
         inputContainer.backgroundColor = AppColor.elevated
         inputContainer.layer.cornerRadius = Spacing.cardRadius

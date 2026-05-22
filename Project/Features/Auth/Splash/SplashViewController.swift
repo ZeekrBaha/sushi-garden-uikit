@@ -29,6 +29,13 @@ final class SplashViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        view.accessibilityIdentifier = "splash.view"
+        #if DEBUG
+        if CommandLine.arguments.contains("--uitesting") {
+            onContinue?()
+            return
+        }
+        #endif
         DispatchQueue.main.asyncAfter(deadline: .now() + splashDelay) { [weak self] in
             self?.onContinue?()
         }

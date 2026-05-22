@@ -12,7 +12,13 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
         FontLoader.registerCustomFonts()
         let window = UIWindow(windowScene: windowScene)
-        let coordinator = AppCoordinator(window: window, container: AppContainer())
+        let container = AppContainer()
+        #if DEBUG
+        if CommandLine.arguments.contains("--uitesting-authenticated") {
+            _ = container.auth.login(email: "test@sushi.ru", password: "secret1")
+        }
+        #endif
+        let coordinator = AppCoordinator(window: window, container: container)
         self.window = window
         self.appCoordinator = coordinator
         coordinator.start()
