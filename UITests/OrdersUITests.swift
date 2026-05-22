@@ -23,7 +23,7 @@ final class OrdersUITests: XCTestCase {
 
     func test_ordersTab_isAccessible() {
         app.navigateToTab("Заказы")
-        XCTAssertFalse(app.tabBars.buttons["Заказы"].isSelected == false &&
-                       !app.staticTexts[AX.Orders.empty].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.tabBars.buttons["Заказы"].isSelected)
+        XCTAssertTrue(app.staticTexts[AX.Orders.empty].waitForExistence(timeout: 2))
     }
 }

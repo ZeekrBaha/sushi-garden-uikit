@@ -33,10 +33,6 @@ final class ProfileUITests: XCTestCase {
         XCTAssertEqual(app.staticTexts[AX.Profile.email].label, "test@sushi.ru")
     }
 
-    func test_logoutButton_exists() {
-        XCTAssertTrue(app.buttons[AX.Profile.logout].exists)
-    }
-
     func test_logout_navigatesToLoginScreen() {
         app.buttons[AX.Profile.logout].tap()
         XCTAssertTrue(app.buttons[AX.Login.loginButton].waitForExistence(timeout: 3))
@@ -44,26 +40,14 @@ final class ProfileUITests: XCTestCase {
 
     func test_logout_thenLoginAgain_succeeds() {
         app.buttons[AX.Profile.logout].tap()
-        XCTAssertTrue(app.buttons[AX.Login.loginButton].waitForExistence(timeout: 3))
-        app.textFields[AX.Login.email].tap()
-        app.textFields[AX.Login.email].typeText("test@sushi.ru")
-        app.secureTextFields[AX.Login.password].tap()
-        app.secureTextFields[AX.Login.password].typeText("secret1")
-        app.buttons[AX.Login.loginButton].tap()
-        app.waitForCatalog()
+        app.loginWithSeededCredentials()
         XCTAssertTrue(app.tabBars.firstMatch.exists)
     }
 
     func test_logout_repeatedLoginLogout_noAccumulation() {
         // Exercises the AppCoordinator child-coordinator retention bug fix
         app.buttons[AX.Profile.logout].tap()
-        app.waitForLoginScreen()
-        app.textFields[AX.Login.email].tap()
-        app.textFields[AX.Login.email].typeText("test@sushi.ru")
-        app.secureTextFields[AX.Login.password].tap()
-        app.secureTextFields[AX.Login.password].typeText("secret1")
-        app.buttons[AX.Login.loginButton].tap()
-        app.waitForCatalog()
+        app.loginWithSeededCredentials()
         app.navigateToTab("Профиль")
         XCTAssertTrue(app.buttons[AX.Profile.logout].waitForExistence(timeout: 3))
         app.buttons[AX.Profile.logout].tap()
