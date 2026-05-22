@@ -56,7 +56,7 @@ final class CartUITests: XCTestCase {
         XCTAssertTrue(app.cells[AX.Cart.item("hikari")].waitForExistence(timeout: 2))
         app.buttons[AX.Cart.stepperIncrement("hikari")].tap()
         // Hikari is 620 ₽; 2 × 620 = 1240 ₽
-        XCTAssertTrue(app.cells[AX.Cart.item("hikari")].staticTexts["1240 ₽"].exists)
+        XCTAssertTrue(app.cells[AX.Cart.item("hikari")].staticTexts["1240 ₽"].waitForExistence(timeout: 2))
     }
 
     func test_decrementToOne_doesNotRemoveItem() {
@@ -75,7 +75,8 @@ final class CartUITests: XCTestCase {
         app.navigateToCart()
         XCTAssertTrue(app.cells[AX.Cart.item("hikari")].waitForExistence(timeout: 2))
         app.cells[AX.Cart.item("hikari")].swipeLeft()
-        app.buttons["Удалить"].tap()
+        let deleteActionTitle = "Удалить"
+        app.buttons[deleteActionTitle].tap()
         XCTAssertTrue(app.staticTexts[AX.Cart.empty].waitForExistence(timeout: 2))
     }
 

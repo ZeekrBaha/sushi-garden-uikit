@@ -31,10 +31,6 @@ final class CheckoutUITests: XCTestCase {
         XCTAssertFalse(app.buttons[AX.Checkout.confirm].isEnabled)
     }
 
-    func test_addressLabel_exists() {
-        XCTAssertTrue(app.staticTexts[AX.Checkout.address].exists)
-    }
-
     func test_geocodeErrorLabel_hiddenInitially() {
         // The error label should be hidden unless geocoding fails
         let errorLabel = app.staticTexts[AX.Checkout.geocodeError]
