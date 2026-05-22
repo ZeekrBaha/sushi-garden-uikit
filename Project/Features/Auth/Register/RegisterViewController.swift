@@ -73,6 +73,14 @@ final class RegisterViewController: UIViewController {
             fields.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -Spacing.xl),
             fields.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -Spacing.m * 2),
         ])
+
+        nameField.setFieldIdentifier("register.name")
+        phoneField.setFieldIdentifier("register.phone")
+        emailField.setFieldIdentifier("register.email")
+        passwordField.setFieldIdentifier("register.password")
+        registerButton.accessibilityIdentifier = "register.registerButton"
+        toggleButton.accessibilityIdentifier = "register.loginLink"
+        authErrorLabel.accessibilityIdentifier = "register.authError"
     }
 
     @objc private func registerTapped() {

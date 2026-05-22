@@ -59,6 +59,12 @@ final class LoginViewController: UIViewController {
             stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Spacing.m),
             stack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
+
+        emailField.setFieldIdentifier("login.email")
+        passwordField.setFieldIdentifier("login.password")
+        loginButton.accessibilityIdentifier = "login.loginButton"
+        toggleButton.accessibilityIdentifier = "login.registerLink"
+        authErrorLabel.accessibilityIdentifier = "login.authError"
     }
 
     @objc private func loginTapped() {
