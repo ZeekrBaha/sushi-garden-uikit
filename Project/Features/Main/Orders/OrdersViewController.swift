@@ -31,6 +31,7 @@ final class OrderSummaryCell: UITableViewCell {
     private static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "d MMM"
+        formatter.locale = Locale(identifier: "ru_RU")
         return formatter
     }()
 
@@ -52,7 +53,7 @@ final class OrderSummaryCell: UITableViewCell {
         let itemCount = order.items.reduce(0) { $0 + $1.quantity }
         itemCountLabel.text = "\(itemCount) \(itemCount == 1 ? "товар" : "товара")"
 
-        totalLabel.text = "₽\(order.total)"
+        totalLabel.text = "\(order.total) ₽"
         statusBadge.text = " \(order.status.displayName) "
         statusBadge.backgroundColor = order.status.badgeColor
     }

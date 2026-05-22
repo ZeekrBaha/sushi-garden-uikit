@@ -22,6 +22,13 @@ final class PromotionBannerCell: UITableViewCell {
         descriptionLabel.text = promotion.description
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        iconView.image = nil
+        titleLabel.text = nil
+        descriptionLabel.text = nil
+    }
+
     private func setup() {
         backgroundColor = AppColor.surface
         layer.cornerRadius = Spacing.cardRadius
