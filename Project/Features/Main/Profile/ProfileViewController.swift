@@ -99,6 +99,7 @@ final class ProfileViewController: UIViewController {
         logoutButton.titleLabel?.font = AppFont.productTitle
         logoutButton.layer.cornerRadius = Spacing.cardRadius
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
+        logoutButton.accessibilityIdentifier = "profile.logout"
         logoutButton.addTarget(self, action: #selector(logoutTapped), for: .touchUpInside)
         view.addSubview(logoutButton)
         NSLayoutConstraint.activate([
@@ -115,8 +116,11 @@ final class ProfileViewController: UIViewController {
         let initials = words.prefix(2).compactMap { $0.first }.map { String($0) }.joined()
         initialsLabel.text = initials.uppercased()
         nameLabel.text = profile.name
+        nameLabel.accessibilityIdentifier = "profile.name"
         phoneLabel.text = profile.phone
+        phoneLabel.accessibilityIdentifier = "profile.phone"
         emailLabel.text = profile.email
+        emailLabel.accessibilityIdentifier = "profile.email"
     }
 
     @objc private func logoutTapped() {

@@ -41,12 +41,14 @@ final class CheckoutViewController: UIViewController {
         addressLabel.font = AppFont.productTitle
         addressLabel.numberOfLines = 2
         addressLabel.translatesAutoresizingMaskIntoConstraints = false
+        addressLabel.accessibilityIdentifier = "checkout.address"
 
         geocodeErrorLabel.text = "Не удалось определить адрес"
         geocodeErrorLabel.textColor = AppColor.accent
         geocodeErrorLabel.font = AppFont.caption
         geocodeErrorLabel.isHidden = true
         geocodeErrorLabel.translatesAutoresizingMaskIntoConstraints = false
+        geocodeErrorLabel.accessibilityIdentifier = "checkout.geocodeError"
 
         summaryLabel.textColor = AppColor.textSecondary
         summaryLabel.font = AppFont.caption
@@ -54,6 +56,7 @@ final class CheckoutViewController: UIViewController {
 
         confirmButton.setTitle("Подтвердить заказ", for: .normal)
         confirmButton.isEnabled = false
+        confirmButton.accessibilityIdentifier = "checkout.confirm"
         confirmButton.addTarget(self, action: #selector(confirmTapped), for: .touchUpInside)
 
         let infoStack = UIStackView(

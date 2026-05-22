@@ -35,6 +35,7 @@ final class CartViewController: UIViewController {
 
         footerView.translatesAutoresizingMaskIntoConstraints = false
         footerView.checkoutButton.addTarget(self, action: #selector(checkoutTapped), for: .touchUpInside)
+        footerView.checkoutButton.accessibilityIdentifier = "cart.checkout"
 
         view.addSubview(tableView)
         view.addSubview(footerView)
@@ -57,6 +58,7 @@ final class CartViewController: UIViewController {
         emptyLabel.font = AppFont.productTitle
         emptyLabel.textAlignment = .center
         emptyLabel.translatesAutoresizingMaskIntoConstraints = false
+        emptyLabel.accessibilityIdentifier = "cart.empty"
         view.addSubview(emptyLabel)
 
         NSLayoutConstraint.activate([

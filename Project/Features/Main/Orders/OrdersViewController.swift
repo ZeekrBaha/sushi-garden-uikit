@@ -48,6 +48,7 @@ final class OrderSummaryCell: UITableViewCell {
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     func configure(with order: Order) {
+        accessibilityIdentifier = "orders.cell.\(order.id)"
         dateLabel.text = Self.dateFormatter.string(from: order.createdAt)
 
         let itemCount = order.items.reduce(0) { $0 + $1.quantity }
@@ -165,6 +166,7 @@ final class OrdersViewController: UIViewController {
         emptyLabel.font = AppFont.productTitle
         emptyLabel.textAlignment = .center
         emptyLabel.translatesAutoresizingMaskIntoConstraints = false
+        emptyLabel.accessibilityIdentifier = "orders.empty"
         view.addSubview(emptyLabel)
         NSLayoutConstraint.activate([
             emptyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),

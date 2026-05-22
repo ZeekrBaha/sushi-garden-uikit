@@ -17,6 +17,7 @@ final class PromotionBannerCell: UITableViewCell {
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     func configure(with promotion: Promotion) {
+        accessibilityIdentifier = "promotions.cell.\(promotion.id)"
         iconView.image = UIImage(systemName: promotion.imageName)
         titleLabel.text = promotion.title
         descriptionLabel.text = promotion.description

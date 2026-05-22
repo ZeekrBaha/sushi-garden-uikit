@@ -23,6 +23,8 @@ final class CartItemCell: UITableViewCell {
         priceLabel.text = "\(item.subtotal) ₽"
         productImageView.image = UIImage(named: item.product.imageName) ?? UIImage(systemName: "photo")
         stepper.setCount(item.quantity)
+        accessibilityIdentifier = "cart.item.\(item.product.id)"
+        stepper.setIdentifierPrefix("cart.item.\(item.product.id).stepper")
     }
 
     func simulateIncrementTap() {
