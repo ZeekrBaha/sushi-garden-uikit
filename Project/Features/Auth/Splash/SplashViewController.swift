@@ -25,11 +25,11 @@ final class SplashViewController: UIViewController {
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
+        view.accessibilityIdentifier = "splash.view"
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        view.accessibilityIdentifier = "splash.view"
         #if DEBUG
         if CommandLine.arguments.contains("--uitesting") {
             onContinue?()
