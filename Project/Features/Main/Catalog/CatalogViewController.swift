@@ -6,6 +6,7 @@ final class CatalogViewController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
+    private var catalogEmptyLabel: UILabel?
 
     enum Section: Int, CaseIterable {
         case categories, products
@@ -94,6 +95,20 @@ final class CatalogViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
+        let emptyLabel = UILabel()
+        emptyLabel.text = "В этой категории пока нет товаров"
+        emptyLabel.textColor = AppColor.textSecondary
+        emptyLabel.font = AppFont.productTitle
+        emptyLabel.textAlignment = .center
+        emptyLabel.isHidden = true
+        emptyLabel.accessibilityIdentifier = "catalog.empty"
+        emptyLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(emptyLabel)
+        NSLayoutConstraint.activate([
+            emptyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+        catalogEmptyLabel = emptyLabel
     }
 
     private func configureDataSource() {
@@ -108,6 +123,7 @@ final class CatalogViewController: UIViewController {
                     for: indexPath) as! CategoryTabCell
                 cell.configure(name: category.name,
                                isSelected: category.id == self.viewModel.selectedCategoryId)
+                cell.accessibilityIdentifier = "catalog.category.\(category.id)"
                 return cell
 
             case .product(let product):
@@ -140,6 +156,7 @@ final class CatalogViewController: UIViewController {
         // Reconfigure category cells so selected state reflects current selectedCategoryId
         snapshot.reconfigureItems(categoryItems)
         dataSource.apply(snapshot, animatingDifferences: false)
+        catalogEmptyLabel?.isHidden = !productItems.isEmpty
     }
 }
 

@@ -23,6 +23,8 @@ final class ProductCell: UICollectionViewCell {
         weightLabel.text = "\(product.weightGrams) г"
         priceLabel.text = "\(product.price) ₽"
         imageView.image = UIImage(named: product.imageName) ?? UIImage(systemName: "photo")
+        accessibilityIdentifier = "catalog.product.\(product.id)"
+        addButton.accessibilityIdentifier = "catalog.add.\(product.id)"
     }
 
     override func prepareForReuse() {

@@ -100,6 +100,12 @@ final class ProductDetailViewController: UIViewController {
         descriptionLabel.text = product.description.isEmpty ? nil : product.description
         priceLabel.text = "\(product.price) ₽"
         heroImageView.image = UIImage(named: product.imageName) ?? UIImage(systemName: "photo")
+        nameLabel.accessibilityIdentifier = "detail.name"
+        weightLabel.accessibilityIdentifier = "detail.weight"
+        priceLabel.accessibilityIdentifier = "detail.price"
+        descriptionLabel.accessibilityIdentifier = "detail.description"
+        addButton.accessibilityIdentifier = "detail.addButton"
+        stepper.setIdentifierPrefix("detail.stepper")
     }
 
     @objc private func addToCartTapped() {
