@@ -13,9 +13,9 @@ enum AX {
     }
     enum Register {
         static let name = "register.name"
-        static let phone = "register.phone"
         static let email = "register.email"
         static let password = "register.password"
+        static let consent = "register.consent"
         static let registerButton = "register.registerButton"
         static let loginLink = "register.loginLink"
         static let authError = "register.authError"
