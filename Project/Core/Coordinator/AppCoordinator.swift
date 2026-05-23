@@ -24,8 +24,8 @@ final class AppCoordinator: Coordinator {
     }
 
     private func setRoot(isAuthenticated: Bool) {
+        childCoordinators.removeAll()
         if isAuthenticated {
-            childCoordinators.removeAll()
             let mainTabCoordinator = MainTabCoordinator(container: container)
             addChild(mainTabCoordinator)
             mainTabCoordinator.start()
