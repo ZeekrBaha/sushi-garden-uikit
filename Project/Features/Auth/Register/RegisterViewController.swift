@@ -60,6 +60,10 @@ final class RegisterViewController: UIViewController {
         emailField.textField.keyboardType = .emailAddress
         passwordField.setFieldIdentifier("register.password")
 
+        [nameField.textField, emailField.textField, passwordField.textField].forEach {
+            $0.addTarget(self, action: #selector(updateButtonState), for: .editingChanged)
+        }
+
         authErrorLabel.textColor = AppColor.accent
         authErrorLabel.font = AppFont.caption
         authErrorLabel.textAlignment = .center
@@ -195,8 +199,16 @@ final class RegisterViewController: UIViewController {
         consentChecked.toggle()
         checkboxView.backgroundColor = consentChecked ? AppColor.accent : .clear
         checkmarkImage.isHidden = !consentChecked
-        registerButton.isEnabled = consentChecked
-        registerButton.alpha = consentChecked ? 1.0 : 0.95
+        updateButtonState()
+    }
+
+    @objc private func updateButtonState() {
+        let allFilled = !(nameField.textField.text ?? "").isEmpty
+            && !(emailField.textField.text ?? "").isEmpty
+            && !(passwordField.textField.text ?? "").isEmpty
+        let enabled = allFilled && consentChecked
+        registerButton.isEnabled = enabled
+        registerButton.alpha = enabled ? 1.0 : 0.95
     }
 
     @objc private func registerTapped() {
