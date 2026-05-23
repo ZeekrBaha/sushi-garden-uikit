@@ -17,13 +17,13 @@ final class InMemoryCatalogService: CatalogServicing {
 
     private let _products: [Product] = [
         Product(id: "hikari", name: "Хикари", categoryId: "rolls",
-                weightGrams: 255, price: 620, imageName: "hikari", description: ""),
+                weightGrams: 255, price: 620, imageName: "product_hikari", description: ""),
         Product(id: "los_angeles", name: "Лос-Анджелес", categoryId: "rolls",
-                weightGrams: 285, price: 707, imageName: "los_angeles", description: ""),
+                weightGrams: 285, price: 707, imageName: "product_la", description: ""),
         Product(id: "idaho", name: "Айдахо маки", categoryId: "rolls",
-                weightGrams: 285, price: 810, imageName: "idaho", description: ""),
+                weightGrams: 285, price: 810, imageName: "product_idaho", description: ""),
         Product(id: "osaka", name: "Осака маки", categoryId: "rolls",
-                weightGrams: 275, price: 740, imageName: "osaka", description: ""),
+                weightGrams: 275, price: 740, imageName: "product_osaka", description: ""),
     ]
 
     func categories() -> [Category] { _categories }
